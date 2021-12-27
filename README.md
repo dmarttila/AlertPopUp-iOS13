@@ -23,5 +23,7 @@ Button("Alert with one button and action") {
 }
 5. Preview and click the button. The alert should pop up. 
 
+Repo of usage examples here: https://github.com/dmarttila/AlertPopupsUsingPackage
+
 MIT License
 
