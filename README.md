@@ -1,6 +1,6 @@
 # AlertPopUp-iOS13
 
-Package for creating alerts in iOS 13 - 15.1
+Package for creating alerts in iOS 13 - 14
 
 Usage:
 
