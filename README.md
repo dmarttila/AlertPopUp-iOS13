@@ -19,3 +19,5 @@ Button("Alert with one button and action") {
 }
 5. Preview and click the button. The alert should pop up. 
 
+MIT License
+
