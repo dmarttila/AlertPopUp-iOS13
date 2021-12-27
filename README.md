@@ -1,9 +1,13 @@
 # AlertPopUp-iOS13
 
-Helper for creating alerts in iOS 13 - 15.2
+Package for creating alerts in iOS 13 - 15.2
 
-Usage:
+Example usage:
 
+[a sample view]
+import AlertPopUp-iOS13
+
+body....
 @State private var alertParams: AlertParams?
 VStack {
     Button("Alert with one button and action") {
