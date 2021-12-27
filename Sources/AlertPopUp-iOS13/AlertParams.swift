@@ -1,11 +1,10 @@
 //
-//  AlertInfo.swift
+//  AlertParams.swift
 //  AlertPopups
 //
 //  Created by Doug Marttila on 12/2/21.
 //  You could make the destructive params optionals instead of passing in default values. I still go back and forth on which approach is better.
 
-import Foundation
 import SwiftUI
 
 public struct AlertParams: Identifiable {
@@ -28,6 +27,7 @@ public struct AlertParams: Identifiable {
     }
 }
 
+//Because it's in a Package, the struct needs to be declared public, and you need a public init method
 public struct AlertModifier: ViewModifier {
     public init (alertParams: Binding<AlertParams?>) {
         self._alertParams = alertParams
