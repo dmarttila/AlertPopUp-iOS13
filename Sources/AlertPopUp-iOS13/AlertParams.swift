@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public struct AlertInfo: Identifiable {
+public struct AlertParams: Identifiable {
     public let id: UUID = UUID()
     public let title: String
     public let message: String
@@ -29,10 +29,10 @@ public struct AlertInfo: Identifiable {
 }
 
 public struct AlertModifier: ViewModifier {
-    public init (alertParams: Binding<AlertInfo?>) {
+    public init (alertParams: Binding<AlertParams?>) {
         self._alertParams = alertParams
     }
-    @Binding public var alertParams: AlertInfo?
+    @Binding public var alertParams: AlertParams?
     public func body(content: Content) -> some View {
         content
             .alert(item: $alertParams, content: { alertInfo in
