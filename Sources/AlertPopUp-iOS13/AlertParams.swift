@@ -17,7 +17,7 @@ public struct AlertParams: Identifiable {
     public let destructive: Bool
     public let primaryButtonAction: () -> Void
     
-    public init (title: String, message: String?, showTwoButtons: Bool = false, primaryButtonLabel: String = "OK", destructive: Bool = false, primaryButtonAction: @escaping () -> Void = {}) {
+    public init (title: String, message: String? = nil, showTwoButtons: Bool = false, primaryButtonLabel: String = "OK", destructive: Bool = false, primaryButtonAction: @escaping () -> Void = {}) {
         self.title = title
         self.message = message
         self.showTwoButtons = showTwoButtons
