@@ -10,14 +10,14 @@ import SwiftUI
 public struct AlertParams: Identifiable {
     public let id: UUID = UUID()
     public let title: String
-    public let message: String
+    public let message: String?
     public let showTwoButtons: Bool
     public let primaryButtonLabel: String
     //if desctructive, the action button is displayed in red
     public let destructive: Bool
     public let primaryButtonAction: () -> Void
     
-    public init (title: String, message: String, showTwoButtons: Bool = false, primaryButtonLabel: String = "OK", destructive: Bool = false, primaryButtonAction: @escaping () -> Void = {}) {
+    public init (title: String, message: String?, showTwoButtons: Bool = false, primaryButtonLabel: String = "OK", destructive: Bool = false, primaryButtonAction: @escaping () -> Void = {}) {
         self.title = title
         self.message = message
         self.showTwoButtons = showTwoButtons
@@ -35,15 +35,15 @@ public struct AlertModifier: ViewModifier {
     @Binding public var alertParams: AlertParams?
     public func body(content: Content) -> some View {
         content
-            .alert(item: $alertParams, content: { alertInfo in
-                if alertInfo.showTwoButtons {
-                    if alertInfo.destructive {
+            .alert(item: $alertParams, content: { alertParams in
+                if alertParams.showTwoButtons {
+                    if alertParams.destructive {
                         return Alert(
-                            title: Text(alertInfo.title),
-                            message: Text(alertInfo.message),
-                            primaryButton: .destructive(Text(alertInfo.primaryButtonLabel),
+                            title: Text(alertParams.title),
+                            message: alertParams.message != nil ? Text(alertParams.message!) : nil,
+                            primaryButton: .destructive(Text(alertParams.primaryButtonLabel),
                                 action: {
-                                    alertInfo.primaryButtonAction()
+                                    alertParams.primaryButtonAction()
                                 })
                             ,
                             secondaryButton: .cancel(Text("Cancel"))
@@ -51,12 +51,12 @@ public struct AlertModifier: ViewModifier {
                     } else {
                         //the only difference between this and the above Alert is .default instead of .desctructive for the primary button label. I can't figure out a way to change that programmatically
                         return Alert(
-                            title: Text(alertInfo.title),
-                            message: Text(alertInfo.message),
+                            title: Text(alertParams.title),
+                            message: alertParams.message != nil ? Text(alertParams.message!) : nil,
                             primaryButton:
-                                    .default(Text(alertInfo.primaryButtonLabel),
+                                    .default(Text(alertParams.primaryButtonLabel),
                                     action: {
-                                        alertInfo.primaryButtonAction()
+                                        alertParams.primaryButtonAction()
                                     })
                             ,
                             secondaryButton: .cancel(Text("Cancel"))
@@ -64,11 +64,11 @@ public struct AlertModifier: ViewModifier {
                     }
                 } else {
                     return Alert(
-                        title: Text(alertInfo.title),
-                        message: Text(alertInfo.message),
-                        dismissButton: .default(Text(alertInfo.primaryButtonLabel),
+                        title: Text(alertParams.title),
+                        message: alertParams.message != nil ? Text(alertParams.message!) : nil,
+                        dismissButton: .default(Text(alertParams.primaryButtonLabel),
                             action: {
-                                alertInfo.primaryButtonAction()
+                                alertParams.primaryButtonAction()
                             })
                     )
                 }
