@@ -15,20 +15,20 @@ public struct AlertParams: Identifiable {
     public let primaryButtonLabel: String
     //if desctructive, the action button is displayed in red
     public let destructive: Bool
-    //this will usually be "Cancel"
-    public let secondaryButtonLabel: String
     public let secondaryButtonAction: () -> Void
+    //this will usually be "Cancel" and is ordered after the secondaryButtonAction so you don't get the syntax error with multiple trailing-closures
+    public let secondaryButtonLabel: String
     //primary action at the end for trailing-closure goodness
     public let primaryButtonAction: () -> Void
     
-    public init (title: String, message: String? = nil, showTwoButtons: Bool = false, primaryButtonLabel: String = "OK", destructive: Bool = false, secondaryButtonLabel: String = "Cancel", secondaryButtonAction: @escaping () -> Void = {}, primaryButtonAction: @escaping () -> Void = {}) {
+    public init (title: String, message: String? = nil, showTwoButtons: Bool = false, primaryButtonLabel: String = "OK", destructive: Bool = false, secondaryButtonAction: @escaping () -> Void = {}, secondaryButtonLabel: String = "Cancel", primaryButtonAction: @escaping () -> Void = {}) {
         self.title = title
         self.message = message
         self.showTwoButtons = showTwoButtons
         self.primaryButtonLabel = primaryButtonLabel
         self.destructive = destructive
-        self.secondaryButtonLabel = secondaryButtonLabel
         self.secondaryButtonAction = secondaryButtonAction
+        self.secondaryButtonLabel = secondaryButtonLabel
         self.primaryButtonAction = primaryButtonAction
     }
 }
