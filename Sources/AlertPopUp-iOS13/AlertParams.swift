@@ -43,37 +43,24 @@ public struct AlertModifier: ViewModifier {
         content
             .alert(item: $alertParams, content: { alertParams in
                 if alertParams.showTwoButtons {
-                    if alertParams.destructive {
-                        return Alert(
-                            title: Text(alertParams.title),
-                            message: alertParams.message != nil ? Text(alertParams.message!) : nil,
-                            primaryButton: .destructive(Text(alertParams.primaryButtonLabel),
+                    return Alert(
+                        title: Text(alertParams.title),
+                        message: alertParams.message != nil ? Text(alertParams.message!) : nil,
+                        primaryButton: alertParams.destructive ? .destructive(Text(alertParams.primaryButtonLabel),
                                 action: {
                                     alertParams.primaryButtonAction()
                                 })
-                            ,
-                            secondaryButton: alertParams.secondaryButtonLabel == "Cancel" ? .cancel(Text("Cancel")) : .default(Text(alertParams.secondaryButtonLabel),
-                            action: {
-                                alertParams.secondaryButtonAction()
-                            })
-                        )
-                    } else {
-                        //the only difference between this and the above Alert is .default instead of .desctructive for the primary button label. I can't figure out a way to change that programmatically
-                        return Alert(
-                            title: Text(alertParams.title),
-                            message: alertParams.message != nil ? Text(alertParams.message!) : nil,
-                            primaryButton:
-                                    .default(Text(alertParams.primaryButtonLabel),
-                                    action: {
-                                        alertParams.primaryButtonAction()
-                                    })
-                            ,
-                            secondaryButton: alertParams.secondaryButtonLabel == "Cancel" ? .cancel(Text("Cancel")) : .default(Text(alertParams.secondaryButtonLabel),
-                            action: {
-                                alertParams.secondaryButtonAction()
-                            })
-                        )
-                    }
+                        :
+                            .default(Text(alertParams.primaryButtonLabel),
+                                action: {
+                                    alertParams.primaryButtonAction()
+                                })
+                        ,
+                        secondaryButton: alertParams.secondaryButtonLabel == "Cancel" ? .cancel(Text("Cancel")) : .default(Text(alertParams.secondaryButtonLabel),
+                        action: {
+                            alertParams.secondaryButtonAction()
+                        })
+                    )
                 } else {
                     return Alert(
                         title: Text(alertParams.title),
