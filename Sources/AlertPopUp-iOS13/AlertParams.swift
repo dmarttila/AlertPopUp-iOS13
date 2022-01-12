@@ -15,14 +15,20 @@ public struct AlertParams: Identifiable {
     public let primaryButtonLabel: String
     //if desctructive, the action button is displayed in red
     public let destructive: Bool
+    //this will usually be "Cancel"
+    public let secondaryButtonLabel: String
+    public let secondaryButtonAction: () -> Void
+    //primary action at the end for trailing-closure goodness
     public let primaryButtonAction: () -> Void
     
-    public init (title: String, message: String? = nil, showTwoButtons: Bool = false, primaryButtonLabel: String = "OK", destructive: Bool = false, primaryButtonAction: @escaping () -> Void = {}) {
+    public init (title: String, message: String? = nil, showTwoButtons: Bool = false, primaryButtonLabel: String = "OK", destructive: Bool = false, secondaryButtonLabel: String = "Cancel", secondaryButtonAction: @escaping () -> Void = {}, primaryButtonAction: @escaping () -> Void = {}) {
         self.title = title
         self.message = message
         self.showTwoButtons = showTwoButtons
         self.primaryButtonLabel = primaryButtonLabel
         self.destructive = destructive
+        self.secondaryButtonLabel = secondaryButtonLabel
+        self.secondaryButtonAction = secondaryButtonAction
         self.primaryButtonAction = primaryButtonAction
     }
 }
@@ -46,7 +52,10 @@ public struct AlertModifier: ViewModifier {
                                     alertParams.primaryButtonAction()
                                 })
                             ,
-                            secondaryButton: .cancel(Text("Cancel"))
+                            secondaryButton: alertParams.secondaryButtonLabel == "Cancel" ? .cancel(Text("Cancel")) : .default(Text(alertParams.secondaryButtonLabel),
+                            action: {
+                                alertParams.secondaryButtonAction()
+                            })
                         )
                     } else {
                         //the only difference between this and the above Alert is .default instead of .desctructive for the primary button label. I can't figure out a way to change that programmatically
@@ -59,7 +68,10 @@ public struct AlertModifier: ViewModifier {
                                         alertParams.primaryButtonAction()
                                     })
                             ,
-                            secondaryButton: .cancel(Text("Cancel"))
+                            secondaryButton: alertParams.secondaryButtonLabel == "Cancel" ? .cancel(Text("Cancel")) : .default(Text(alertParams.secondaryButtonLabel),
+                            action: {
+                                alertParams.secondaryButtonAction()
+                            })
                         )
                     }
                 } else {
